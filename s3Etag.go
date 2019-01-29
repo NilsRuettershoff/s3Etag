@@ -8,7 +8,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/pkg/errors"
 )
@@ -53,12 +55,17 @@ func CalculateLocalETag(path string, chunksize int) (etag string, err error) {
 	return etag, err
 }
 
-func calcChunkEtag(r io.ReadSeeker, pos int64) (etag string) {
-
-	return etag
-}
-
 // FetchS3Etag fetches S3 etag of an object via s3client from bucket
 func FetchS3Etag(s3client *s3.S3, bucket string, key string) (etag string, err error) {
+	input := &s3.HeadObjectInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(key)}
+	result, err := s3client.HeadObject(input)
+	if err != nil {
+		return "", err
+	}
+	etag = *result.ETag
+	// api adds double quotes at the beginning and end
+	etag = strings.Replace(etag, "\"", "", -1)
 	return etag, err
 }
