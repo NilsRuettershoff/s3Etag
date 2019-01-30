@@ -1,7 +1,6 @@
 package s3Etag
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
@@ -29,16 +28,16 @@ func CalculateLocalETag(path string, chunksize int) (etag string, err error) {
 	// simple sequential way
 	buffer := make([]byte, chunkbytes, chunkbytes)
 	bufr := bytes.NewReader(buffer)
-	reader := bufio.NewReader(f)
 	gh := md5.New()
 	counter := 0
 	var n int
 	run := true
 	// generate hash of chunk and write result to global hash
+	h := md5.New()
 	for run {
-		h := md5.New()
+		h.Reset()
 		bufr.Reset(buffer)
-		n, err = io.ReadFull(reader, buffer)
+		n, err = io.ReadFull(f, buffer)
 		if err == io.ErrUnexpectedEOF {
 			run = false
 		}

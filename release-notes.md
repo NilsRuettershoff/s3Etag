@@ -1,7 +1,11 @@
 # Release Notes
 
+## 0.1.1
 
-## 0.0.2
+* simplified hash loop to improve performance
+* fixed missing lf in client
+
+## 0.1.0
 
 * fixed mod issue with client
 * implemented s3 etag fetch in package

@@ -47,13 +47,13 @@ func main() {
 		if awsEtag == fsEtag {
 			comp = "same"
 		}
-		fmt.Printf("FS Etag: %s | S3 Etag: %s | comparission: %s", fsEtag, awsEtag, comp)
+		fmt.Printf("FS Etag: %s | S3 Etag: %s | comparission: %s\n", fsEtag, awsEtag, comp)
 	}
 	if awsEtag != "" && fsEtag == "" {
-		fmt.Printf("S3 Etag: %s", awsEtag)
+		fmt.Printf("S3 Etag: %s\n", awsEtag)
 	}
 
 	if fsEtag != "" && awsEtag == "" {
-		fmt.Printf("FS Etag: %s", fsEtag)
+		fmt.Printf("FS Etag: %s\n", fsEtag)
 	}
 }
