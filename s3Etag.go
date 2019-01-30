@@ -16,7 +16,7 @@ import (
 
 // CalculateLocalETag calculates the local etag
 func CalculateLocalETag(path string, chunksize int) (etag string, err error) {
-	_, ok := os.Stat(path)
+	fstat, ok := os.Stat(path)
 	if os.IsNotExist(ok) {
 		return "", errors.Wrap(err, fmt.Sprintf("inputfile %s does not exists", path))
 	}
@@ -25,6 +25,15 @@ func CalculateLocalETag(path string, chunksize int) (etag string, err error) {
 		return "", errors.Wrap(err, "unable to open file")
 	}
 	chunkbytes := int64(chunksize * 1024 * 1024)
+	// if file is smaller then 5 MB Etag is just the md5sum
+	if fstat.Size() <= chunkbytes {
+		h := md5.New()
+		_, err := io.Copy(h, f)
+		if err != nil {
+			return "", err
+		}
+		return hex.EncodeToString(h.Sum(nil)), nil
+	}
 	// simple sequential way
 	buffer := make([]byte, chunkbytes, chunkbytes)
 	bufr := bytes.NewReader(buffer)
