@@ -1,4 +1,4 @@
-module github.com/CologneBroadcastingCenter/s3Etag
+module github.com/NilsRuettershoff/s3Etag
 
 require (
 	github.com/aws/aws-sdk-go v1.16.26

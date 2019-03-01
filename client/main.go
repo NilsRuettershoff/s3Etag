@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 
-	"github.com/CologneBroadcastingCenter/s3Etag"
+	"github.com/NilsRuettershoff/s3Etag"
 )
 
 func main() {

@@ -1,11 +1,15 @@
 # Release Notes
 
-## 0.1.2
+## 1.2.3
+
+* fixed package namespace
+
+## 1.1.2
 
 * fixded etag for small files (smalles then 5 MB)
   * etag calculation is different for small files
 
-## 0.1.1
+## 1.1.0
 
 * simplified hash loop to improve performance
 * fixed missing lf in client
